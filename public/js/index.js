@@ -1,68 +1,42 @@
 const elementExists = (id) => document.getElementById(id) !== null;
 
-function getCurrentURL() {
-  return window.location.href;
-}
+elementExists("send") &&
+  document.getElementById("send").addEventListener("click", function () {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-function getParameters(currentURL) {
-  const myParams = {};
-  let urlString = currentURL;
-  let paramString = urlString.split("?")[1];
-  let queryString = new URLSearchParams(paramString);
-  for (let pair of queryString.entries()) {
-    myParams[pair[0]] = pair[1];
-  }
-  return myParams;
-}
-
-const convertParamsToQuery = (params) => {
-  let query = "";
-  for (const key in params) {
-    if (params.hasOwnProperty(key)) {
-      const value = params[key];
-      query += `${key}=${value}&`;
-    }
-  }
-  return query;
-};
-const fetchContenidoProductos = async () => {
-  const url = getCurrentURL();
-  const params = getParameters(url);
-  const query = convertParamsToQuery(params);
-  const response = await fetch(`http://localhost:3000/api/product?${query}`);
-  const data = await response.json();
-  const myElement = document.getElementById("contenidoProductos");
-  myElement.innerHTML = data.payload.map((product) => {
-    return `
-            <div class="card col-3">
-                <img src="${product.thumbnail}" class="card-img-top" alt="...">
-                <div class="card-body">
-                <h5 class="card-title">${product.title}</h5>
-                <p class="card-text">${product.description}</p>
-                <p class="card-text">${product.price}</p>
-                <a href="#" id=${product._id} class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            `;
+    fetch(`/login?username=${username}&password=${password}`, {});
+    console
+      .log("aqui voy api")
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
   });
 
-  const buttons = document.querySelectorAll(".btn");
-  buttons.forEach((button) => {
-    button.addEventListener("click", (e) => {
-      e.preventDefault();
-      const id = e.target.id;
-      console.log(id);
-      window.location.href = `/product/${id}`;
+elementExists("getButton") &&
+  document.getElementById("getButton").addEventListener("click", function () {
+    fetch("/getSignedCookie").then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+      });
     });
   });
-};
-elementExists("contenidoProductos") && fetchContenidoProductos();
 
-const fetchProducto = async () => {
-  const url = getCurrentURL();
-  const params = getParameters(url);
-  const query = convertParamsToQuery(params);
-  const response = await fetch(`http://localhost:3000/api/product?${query}`);
-  const data = await response.json();
-  const myElement = document.getElementById("contenidoProductos");
-};
+elementExists("signup") &&
+  document.getElementById("signup").addEventListener("click", function () {
+    const myForm = document.getElementById("myForm");
+    const formData = new FormData(myForm);
+    const data = Object.fromEntries(formData);
+    console.log(data);
+
+    fetch("/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
+  });
