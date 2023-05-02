@@ -26,7 +26,7 @@ app.use(
       resave: true,
       saveUninitialized: true,
       store: MongoStore.create({
-        mongoUrl: "mongodb+srv://burdio:7654321@cluster0.pzcooec.mongodb.net/usuarios?retryWrites=true&w=majority",
+        mongoUrl: "mongodb+srv://burdio:7654321@cluster0.pzcooec.mongodb.net/39700?retryWrites=true&w=majority",
         mongoOptions: {
           useNewUrlParser: true,
           useUnifiedTopology: true,
@@ -49,6 +49,7 @@ app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
 app.get("/", (req, res) => {
+    req.send("hola mundo");
     res.send("Hello World!");
   });
   
@@ -57,9 +58,10 @@ app.get("/", (req, res) => {
 
 
 
+
 const environment = async () => {
     await mongoose
-      .connect("mongodb+srv://burdio:7654321@cluster0.pzcooec.mongodb.net/usuarios?retryWrites=true&w=majority")
+      .connect("mongodb+srv://burdio:7654321@cluster0.pzcooec.mongodb.net/?retryWrites=true&w=majority")
       .then(() => console.log("Conectado a la base de datos"))
       .catch((error) => console.log("Error de conexion", error));
   };
