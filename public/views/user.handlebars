@@ -1,0 +1,22 @@
+<div> <h1> Datos del Usuario Logueado</h1></div>
+    <div>
+        {{#if session.user}}
+            <h2 class="text-center">Bienvenido {{session.user.first_name}}!</h1>
+            <h3>Nombre completo: {{session.user.last_name}}, {{session.user.first_name}}</h5>
+            <h3>Rol: {{session.user.rol}}</h5>
+            <h3>E-Mail: {{session.user.email}}</h5>
+            <h3>Edad: {{session.user.age}}</h5>
+            <h3>ID de carrito: {{session.user.cart}}</h5>
+        {{/if}}
+
+        </div>
+            <button id="ver">Ver Productos</button>
+        </div>
+
+        </div>
+            <button id="logout">Logout</button>
+        </div>
+    </div>
+
+<script src="logout.js" type="application/javascript"></script>
+<script src="users.js" type="application/javascript"></script>
